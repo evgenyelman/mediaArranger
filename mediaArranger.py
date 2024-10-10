@@ -86,7 +86,7 @@ def get_media_metadata(file_path):
         return None, None
 
 # Define the source and target directories
-source_dir = r"C:\Users\evgen\OneDrive\Pictures\testInput"
+source_dir = r"C:\Users\evgen\OneDrive\Pictures\"
 target_dir = r"C:\Users\evgen\OneDrive\Pictures\Sorted Import\test1"
 history_file = os.path.join(target_dir, "sort_history.csv")
 
