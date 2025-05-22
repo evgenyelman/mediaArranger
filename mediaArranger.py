@@ -71,9 +71,23 @@ def get_latest_date_from_history(history_file, device):
     return None
 
 def should_copy_file(date_taken, latest_date):
-    if latest_date:
+    try:
+        # Debugging print to identify any problematic date formats
+        print(f"Checking file with date_taken: {date_taken} and latest_date: {latest_date}")
+        
+        # Ensure date_taken is properly cleaned
+        date_taken = date_taken.split()[0]  # Extract just the date
+        date_taken = date_taken.replace(':', '-')  # Replace any invalid characters
+        
+        # Ensure latest_date is also cleaned if it exists
+        if latest_date:
+            latest_date = latest_date.split()[0]  # Extract just the date
+        
+        # Compare the two dates
         return datetime.strptime(date_taken, "%Y-%m-%d") > datetime.strptime(latest_date, "%Y-%m-%d")
-    return True
+    except ValueError as e:
+        print(f"Error parsing dates: date_taken='{date_taken}', latest_date='{latest_date}', error={e}")
+        return False
 
 def get_media_metadata(file_path):
     file_ext = os.path.splitext(file_path)[1].lower()
@@ -86,8 +100,8 @@ def get_media_metadata(file_path):
         return None, None
 
 # Define the source and target directories
-source_dir = r"C:\Users\evgen\OneDrive\Pictures\"
-target_dir = r"C:\Users\evgen\OneDrive\Pictures\Sorted Import\test1"
+source_dir = r"C:\Personal Folder\Pictures Local\Raw Import"
+target_dir = r"C:\Personal Folder\Pictures Local\Auto Sort"
 history_file = os.path.join(target_dir, "sort_history.csv")
 
 latest_dates = {}
